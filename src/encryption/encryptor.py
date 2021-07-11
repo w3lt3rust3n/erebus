@@ -18,7 +18,7 @@ class Encrypt:
         return filekey
 
     def key_reader(self, key_filename):
-        """Generates"""
+        """ Generates """
         # opening the key
         print("Opening the key")
         with open(key_filename, 'rb') as filekey:
