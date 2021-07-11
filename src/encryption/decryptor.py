@@ -8,11 +8,11 @@ import sh
 # import required module
 from cryptography.fernet import Fernet
 
-class Encrypt:
+class Decrypt:
     def __init__(self, file_to_encrypt):
         self.INPUT_FILE = file_to_encrypt
 
-    def encrypt(self):
+    def decrypt(self):
         file = self.INPUT_FILE
         print("file is {}".format(self.INPUT_FILE))
 
