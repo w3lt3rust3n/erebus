@@ -40,11 +40,11 @@ def save_file_to_encrypt(file_content):
     return file_path
 
 def show_menu():
-    print("########## EREBUS - Simple file encryptor ##########")
-    print("----------------------------------------------------")
+    print("########## EREBUS - Simple file encryption ##########")
+    print("-----------------------------------------------------")
     print("Press 'e' to start the editor")
     print("Press 'q' to quit Erebus")
-    print("----------------------------------------------------")
+    print("-----------------------------------------------------")
 
 def main():
     show_menu()
