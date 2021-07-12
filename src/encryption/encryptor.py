@@ -2,22 +2,26 @@
 # coding: utf-8
 
 """ import required module """
+from os import getenv
 from cryptography.fernet import Fernet
+from settings import settings as cfg
 
 class Encrypt:
     """ Encrypt"""
     def __init__(self, file_to_encrypt):
-        self.INPUT_FILE = file_to_encrypt
+        self.file_to_encrypt = file_to_encrypt
 
-    def key_generator(self, key_filename):
+    @classmethod
+    def __key_generator(cls, key_filename):
         """Generates"""
         print("Generating key")
         key = Fernet.generate_key()
         with open(key_filename, 'wb') as filekey:
             filekey.write(key)
-        return filekey
+        return key_filename
 
-    def key_reader(self, key_filename):
+    @classmethod
+    def __key_loader(cls, key_filename):
         """ Generates """
         # opening the key
         print("Opening the key")
@@ -25,15 +29,32 @@ class Encrypt:
             key = filekey.read()
         return key
 
+    def test_keygen(self):
+        """Test Unit with pytest"""
+        home = getenv("HOME")
+        config = cfg.Config(home)
+        dummy_file_path = home + config.CONFIG_DIR + "dummy.test"
+        assert self.__key_generator(dummy_file_path)
+
+    def test_keyloader(self):
+        """Test Unit with pytest"""
+        home = getenv("HOME")
+        config = cfg.Config(home)
+        dummy_file_path = home + config.CONFIG_DIR + "dummy.test.key"
+        assert self.__key_loader(dummy_file_path)
+
+    # def test_encrypt(self):
+    #     assert self.encrypt()
+
     def encrypt(self):
         """Generates"""
-        file = self.INPUT_FILE
+        file = self.file_to_encrypt
         print("file is ")
         print(file)
 
         key_file = file + ".key"
-        key_gen = key_generator(key_file)
-        key = key_reader(key_gen)
+        key_gen = self.__key_generator(key_file)
+        key = self.__key_loader(key_gen)
         print("Using the key")
         # using the generated key
         fernet = Fernet(key)
