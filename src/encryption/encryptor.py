@@ -2,6 +2,7 @@
 # coding: utf-8
 
 """ import required module """
+import re
 from os import getenv
 from cryptography.fernet import Fernet
 from settings import settings as cfg
@@ -10,18 +11,22 @@ class Encrypt:
     """ Encrypt"""
     def __init__(self, file_to_encrypt):
         self.file_to_encrypt = file_to_encrypt
+        self.home = getenv('HOME')
+        self.config = cfg.Config(self.home)
 
     @classmethod
     def __key_generator(cls, key_filename):
         """Generates"""
+        
         print("Generating key")
+        
         key = Fernet.generate_key()
         with open(key_filename, 'wb') as filekey:
             filekey.write(key)
         return key_filename
 
     @classmethod
-    def __key_loader(cls, key_filename):
+    def __key_loader(self, key_filename):
         """ Generates """
         # opening the key
         print("Opening the key")
@@ -51,11 +56,16 @@ class Encrypt:
         file = self.file_to_encrypt
         print("file is ")
         print(file)
+        
+        file_name = file.rsplit("/",1)[1]
 
-        key_file = file + ".key"
+        key_dir_path = self.config.get_key_dir()
+        
+        key_file = key_dir_path + file_name + ".key"
         key_gen = self.__key_generator(key_file)
         key = self.__key_loader(key_gen)
         print("Using the key")
+        import pdb; pdb.set_trace()
         # using the generated key
         fernet = Fernet(key)
 
