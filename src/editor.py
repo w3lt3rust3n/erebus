@@ -4,24 +4,28 @@ import logging as lg
 from os import getenv
 
 import settings.settings as cfg
+import settings.colors as colors
+
+colors = colors.Colors()
 
 def editor():
-    """gngn"""
+    """Getting user input and return it."""
     buffer = []
-
+    colors.pprint("green", "\n")
     for line in sys.stdin:
         buffer.append(line)
-
-    print("Exiting editor...")
+    colors.pprint("cyan", "Exiting editor...")
 
     if buffer is None:
+        colors.pprint("reset", "!!")
         sys.exit()
     return buffer
 
 def save_file_to_encrypt(file_content):
-    """gngn"""
+    """Save given buffer into file."""
     home = getenv("HOME")
     settings = cfg.Config(home)
+    colors.pprint("reset", "\n")
     file_name = input("File name : ")
     file_path = settings.workspace + file_name
 
@@ -32,5 +36,5 @@ def save_file_to_encrypt(file_content):
         lg.critical("%s", error)
         raise
 
-    print("Done.File saved at {}".format(file_path))
+    colors.pprint("green", "File saved !")
     return file_path
