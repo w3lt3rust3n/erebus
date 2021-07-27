@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
-"""lorem"""
+"""Decrypt a given note."""
 # import required module
 from os import getenv
 
@@ -14,7 +14,7 @@ import settings.colors as colors
 colors = colors.Colors()
 
 class Decrypt:
-    """All that Erebus needs to encrypt notes."""
+    """Set attributes for the decryption."""
     def __init__(self, file_to_decrypt):
         self.encrypted_file = file_to_decrypt
         self.home = getenv('HOME')
@@ -26,7 +26,7 @@ class Decrypt:
         crypto.encrypt()
 
     def get_key(self):
-        """Open a given key file to open and return it"""
+        """Return the key to decrypt the note."""
         key_directory = self.config.get_key_dir()
         key_filename = key_directory + self.encrypted_file + ".key"
         colors.pprint("cyan", "Opening the key")
@@ -35,7 +35,7 @@ class Decrypt:
         return key
 
     def decrypt_and_read(self):
-        """Decrypt the file and print its content on screen"""
+        """Decrypt the file and print its content on screen."""
         file_to_decrypt = self.encrypted_file
         workspace = self.config.get_workspace()
         path_to_file = workspace + file_to_decrypt
